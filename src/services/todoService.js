@@ -1,8 +1,5 @@
 import Boom from 'boom';
 import Todo from '../models/todo';
-import TodoOfUsers from '../models/user';
-import UsersOfTodo from '../models/todo';
-
 
 /**
  * Get all lists.
@@ -33,7 +30,7 @@ export function getTodo(id) {
  * 
  */
 export function getUserTodos(userId) { //user id
-  return new UsersOfTodo({user_id:userId}).fetch()
+  return new Todo().query('where','user_id',userId).fetchAll()
   .then(todo => {
     if (!todo) {
       throw new Boom.notFound('todo not found');
@@ -44,16 +41,7 @@ export function getUserTodos(userId) { //user id
    
 
 }
-// export function getUserTodos(userId){ //user id
-//   return new Todo().query({ where: { user_id: userId } }).fetch().then(todo => {
-//     if (!todo) {
-//       throw new Boom.notFound('todo not found');
-//     }
 
-//     return todo;
-//   });
-
-// }
 
 /**
  * Create new vehicleObj.

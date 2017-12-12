@@ -13,6 +13,8 @@ export function up(knex) {
       .defaultTo(knex.raw('now()'));
     table.timestamp('updated_at');
     table.string('name').notNull();
+    table.string('username').notNull();
+    table.string('password').notNull();
   });
 }
 

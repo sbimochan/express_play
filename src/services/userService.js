@@ -1,6 +1,6 @@
 import Boom from 'boom';
 import User from '../models/user';
-
+import _ from 'lodash';
 /**
  * Get all users.
  *
@@ -48,6 +48,23 @@ export function updateUser(id, user) {
     .save({ name: user.name })
     .then(user => user.refresh());
 }
+/**
+ * jwt ensure
+ */
+export function ensureToken(req, res, next) {
+  console.log(req.headers["authorization"]);
+  
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== 'undefined') {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
+
 
 /**
  * Delete a user.

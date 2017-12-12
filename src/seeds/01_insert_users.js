@@ -14,9 +14,11 @@ export function seed(knex, Promise) {
         // Inserts seed entries
         knex('users').insert({
           name: 'Saugat Acharya',
-          updated_at: new Date()
+          username:'saugat',
+          updated_at: new Date(),
+          password: 'saugatpw'
         }),
-        knex('users').insert({ name: 'John Doe', updated_at: new Date() })
+        knex('users').insert({ name: 'John Doe',username:'john',password:'johnpw', updated_at: new Date() })
       ]);
     });
 

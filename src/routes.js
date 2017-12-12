@@ -3,6 +3,7 @@ import swaggerSpec from './utils/swagger';
 import usersController from './controllers/users';
 import garageController from './controllers/garage';
 import todoController from './controllers/todo';
+import loginController from './controllers/login';
 /**
  * Contains all API routes for the application.
  */
@@ -56,5 +57,5 @@ router.get('/', (req, res) => {
 router.use('/users', usersController);
 router.use('/vehicles',garageController);
 router.use('/todo',todoController);
-
+router.use('/login',loginController);
 export default router;

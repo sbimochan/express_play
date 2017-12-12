@@ -12,11 +12,6 @@ class Todo extends bookshelf.Model {
   }
 }
 
-class UsersOfTodo extends bookshelf.Model {
-   users() {
-    return this.belongsTo(User);
-  }
-}
 // let UsersOfTodo = bookshelf.Model.extend({
 //   tableName:'todo-list',
 //   user: ()=>{
@@ -25,4 +20,4 @@ class UsersOfTodo extends bookshelf.Model {
 // });
 
 export default Todo;
-export { UsersOfTodo };
+
