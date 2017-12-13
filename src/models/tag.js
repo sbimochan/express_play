@@ -14,3 +14,4 @@ class Tag extends bookshelf.Model{
     return this.belongsToMany(Todo);
   }
 }
+export default Tag;

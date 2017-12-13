@@ -9,7 +9,7 @@ export function generateTokens(data) {
 }
 
 export function generateAccessToken(data) {
-  return jwt.sign({ userId: data }, process.env.SECRET_KEY, { expiresIn: 20*60 });
+  return jwt.sign({ userId: data }, process.env.SECRET_KEY, { expiresIn: '1d' });
 }
 
 /**
