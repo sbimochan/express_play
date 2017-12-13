@@ -3,9 +3,22 @@ import validate from '../utils/validate';
 import * as userService from '../services/userService';
 
 const SCHEMA = {
-  name: Joi.string()
-    .label('Name')
+  first_name: Joi.string()
+    .label('first name')
     .max(90)
+    .required(),
+  last_name: Joi.string()
+    .label('Last name')
+    .max(90)
+    .required(),
+  email: Joi.string().email()
+    .label('email')
+    .max(90)
+    .required(),
+  username: Joi.string()
+    .min(3)
+    .max(30)
+    .alphanum()
     .required()
 };
 

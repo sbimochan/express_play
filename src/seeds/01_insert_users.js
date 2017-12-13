@@ -13,12 +13,21 @@ export function seed(knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('users').insert({
-          name: 'Saugat Acharya',
+          first_name: 'Saugat',
+          last_name:'Acharya',
+          email:'saugat@gmail.com',
           username:'saugat',
           updated_at: new Date(),
           password: 'saugatpw'
         }),
-        knex('users').insert({ name: 'John Doe',username:'john',password:'johnpw', updated_at: new Date() })
+        knex('users').insert({ 
+          first_name:'John',
+          last_name:'Doe',
+          email:'john@gmail.com',
+          username:'john',
+          password:'johnpw', 
+          updated_at: 
+          new Date() })
       ]);
     });
 

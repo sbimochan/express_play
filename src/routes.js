@@ -4,6 +4,8 @@ import usersController from './controllers/users';
 import garageController from './controllers/garage';
 import todoController from './controllers/todo';
 import loginController from './controllers/login';
+import refreshController  from "./controllers/refresh";
+import logoutController from "./controllers/logout";
 /**
  * Contains all API routes for the application.
  */
@@ -58,4 +60,6 @@ router.use('/users', usersController);
 router.use('/vehicles',garageController);
 router.use('/todo',todoController);
 router.use('/login',loginController);
+router.use('/refresh',refreshController);
+router.use('/logout',logoutController);
 export default router;

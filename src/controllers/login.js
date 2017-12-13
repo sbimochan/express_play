@@ -6,11 +6,16 @@ import * as loginService from '../services/loginService';
 const router = Router();
 
 router.post('/', (req, res, next) => {
-  // console.log(req.body);
+  console.log(req.body);
   loginService
     .findUser(req.body)
-    .then(data => res.json(data))
+    .then(data => {
+      loginService.saveSession(data);
+      res.json(data);
+    })
     .catch(err => next(err));
+  // next();
 });
+
 
 export default router;
