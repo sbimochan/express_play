@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('todoList',table=>{
+  return knex.schema.createTable('todoLists',table=>{
     table.increments();
     table.string('description').notNull();
     // table.integer('user_id').unsigned();
@@ -10,5 +10,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('todoList');
+  return knex.schema.dropTable('todoLists');
 };

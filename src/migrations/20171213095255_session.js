@@ -1,6 +1,6 @@
 
 exports.up = function (knex, Promise) {
-  return knex.schema.createTable('session', function (table) {
+  return knex.schema.createTable('sessions', function (table) {
     table.increments();
     table
       .timestamp('created_at')
@@ -13,5 +13,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTable('session');
+  return knex.schema.dropTable('sessions');
 };

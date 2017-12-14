@@ -17,12 +17,13 @@ export function getAllTodos() {
  * @param  {Number|String}  id
  * @return {Promise}
  */
-export function getTodo(id) {
-  return new Todo({ id }).fetch().then(todo => {
+export function getTodo(id,userId) {
+  // console.log(userId);
+  
+  return new Todo({id}).where({user_id:userId}).fetch({withRelated:'user'}).then(todo => {
     if (!todo) {
       throw new Boom.notFound('todo not found');
     }
-
     return todo;
   });
 }
@@ -36,7 +37,8 @@ export function getUserTodos(userId) { //user id
       if (!todo) {
         throw new Boom.notFound('todo not found');
       }
-      return todo.relations;
+      return todo;
+      
     });
 }
 /**
@@ -56,34 +58,39 @@ export function searchTodo(search, userId) {
  */
 export function createTodo(todoObj) {
   return new Todo({ description: todoObj.description })
-    .save().then(todoObj => todoObj.refresh());
+    .save().then((todoObj) => {
+      return todoObj.refresh()
+    });
 }
 
 export function createUserTodos(userId, body) { //user id
-
-  // return new Todo({description:body.description, user_id:userId})
-function todoFunc() {
-  return  new Todo({ description: body.description, userId: userId })
-  .save().then(body => body.refresh());
+  return new Todo({ description: body.description, userId: userId })
+    .save().then(result => {
+      result.tags().attach(body.tags);
+      return result.refresh();
+    });
 }
-  todoFunc().then(todo=>{
-    // console.log('todotest',body);
-    return new Tag({tagName:body.tags, todoId:todo.id}).save().then(samosa=>samosa.refresh());
-  });
-  return todoFunc();
-  // return new Todo({ description: body.description, userId: userId })
-  //   .save().then(function createdTodo(Todobody) {
-  //     return Todobody.refresh();
 
-  //     return new Tag({
-  //       todoId: Todobody.attributes.id,
-  //        tagName: body.tags
-  //     });
-  //   });
+/**
+ * for creating tags
+ */
+// export function createTags(userId,body){
+
+//   let tag = new Tag({tag_name:body.tags});
+//   console.log(tag);
+  
+//   return Promise.all([tag.save()])
+//     .then(() => {
+//       console.log('sds',tag);
+      
+//       return new Todo({ description: body.description, userId: userId })
+//         .save().then(result => {
+//           result.tags().attach([tag]);
+//           return result.refresh();
+//     });
+// }
 
 
-  // new Tag({ tagName:body.tag})
-}
 export function createTags(body){
   console.log(body);
   return new Tag({tagName:body.tags})

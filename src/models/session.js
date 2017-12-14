@@ -1,6 +1,6 @@
 import  bookshelf  from "../db";
 
-const TABLE_NAME = 'session';
+const TABLE_NAME = 'sessions';
 
 class Session extends bookshelf.Model{
   get tableName(){

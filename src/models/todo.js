@@ -1,8 +1,8 @@
 import bookshelf from "../db";
-import User, { UserTodo } from "../models/user";
+import User from "../models/user";
 import Tag from "../models/tag";
 
-const TABLE_NAME = 'todoList';
+const TABLE_NAME = 'todoLists';
 
 /**
  * Todo Model

@@ -96,7 +96,7 @@ router.get('/:id/todo', userService.ensureToken,(req,res,next)=>{
         res.sendStatus(403);
       }else{
         if(Number(req.params.id) === verified.userId){
-          todoService.getTodo(req.params.todoId)
+          todoService.getTodo(req.params.todoId,req.params.id)
           .then(data =>res.json(data))
           .catch(err => next(err));
         }

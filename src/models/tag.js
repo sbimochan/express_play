@@ -10,7 +10,7 @@ class Tag extends bookshelf.Model{
   get tableName(){
     return TABLE_NAME;
   }
-  get todos(){
+  todos(){
     return this.belongsToMany(Todo);
   }
 }

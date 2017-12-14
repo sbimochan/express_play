@@ -1,5 +1,5 @@
 import bookshelf from '../db';
-import Todo, { TodoUser } from '../models/todo';
+import Todo from '../models/todo';
 
 const TABLE_NAME = 'users';
 
