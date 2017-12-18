@@ -1,6 +1,5 @@
 import Boom from 'boom';
 import User from '../models/user';
-import _ from 'lodash';
 /**
  * Get all users.
  *
@@ -33,7 +32,13 @@ export function getUser(id) {
  * @return {Promise}
  */
 export function createUser(user) {
-  return new User({ name: user.name }).save().then(user => user.refresh());
+
+  return new User({ first_name: user.first_name ,
+    last_name:user.last_name,
+    email:user.email,
+    username:user.username,
+    password:user.password
+  }).save().then(user => user.refresh());
 }
 
 /**
@@ -53,9 +58,9 @@ export function updateUser(id, user) {
  */
 export function ensureToken(req, res, next) {
   // console.log(req.headers["authorization"]);
-  const bearerHeader = req.headers["authorization"];
+  const bearerHeader = req.headers['authorization'];
   if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(" ");
+    const bearer = bearerHeader.split(' ');
     const bearerToken = bearer[1];
     req.token = bearerToken;
     next();
@@ -63,7 +68,6 @@ export function ensureToken(req, res, next) {
     res.sendStatus(403);
   }
 }
-
 
 /**
  * Delete a user.

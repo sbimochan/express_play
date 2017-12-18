@@ -30,10 +30,22 @@ export function saveSession(data) {
     refresh_token: data.refreshToken
   })
   .save()
-  .then(data => data.refresh());
+  .then(data => data.refresh())
+  .catch(err => 
+    err
+  );
 
   // return allToken;
 }
+// function updateRefreshToken(err,data){
+  
+//   if(err.code === '23505'){
+//     let id = data.userId;
+//     return new Session({user_id:id})
+//     .save({refresh_token:data.refreshToken})
+//     .then(session=>session.refresh());
+//   }
+// }
 export function deleteSession(data){
 //  console.log('user id',data);
  

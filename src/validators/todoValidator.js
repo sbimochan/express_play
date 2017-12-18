@@ -32,8 +32,12 @@ function todoValidator(req, res, next) {
  * @return {Promise}
  */
 function findTodo(req, res, next) {
+  console.log('userid',req.params.id);
+  
+  console.log('x',req.params.todoId);//86
+  
   return todoService
-    .getTodo(req.params.id)
+    .getTodo(req.params.id,req.params.todoId)
     .then(() => next())
     .catch(err => next(err));
 }

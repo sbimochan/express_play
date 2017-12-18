@@ -19,7 +19,9 @@ const SCHEMA = {
     .min(3)
     .max(30)
     .alphanum()
-    .required()
+    .required(),
+    password:Joi.string()
+    .min(3).alphanum().required()
 };
 
 /**

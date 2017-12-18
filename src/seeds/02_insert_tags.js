@@ -13,42 +13,33 @@ export function seed(knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('tags').insert({
-          tag_name: "person",
+          tag_name: 'person',
           created_at: new Date()
-          
         }),
-         knex('tags').insert({
-          tag_name: "nature",
+        knex('tags').insert({
+          tag_name: 'nature',
           created_at: new Date()
-
         }),
-         knex('tags').insert({
-          tag_name: "vehicle",
+        knex('tags').insert({
+          tag_name: 'vehicle',
           created_at: new Date()
-
         }),
-         knex('tags').insert({
-          tag_name: "building",
+        knex('tags').insert({
+          tag_name: 'building',
           created_at: new Date()
-
         }),
-         knex('tags').insert({
-          tag_name: "food",
+        knex('tags').insert({
+          tag_name: 'food',
           created_at: new Date()
-
         }),
-         knex('tags').insert({
-          tag_name: "all",
+        knex('tags').insert({
+          tag_name: 'all',
           created_at: new Date()
-
         }),
-         knex('tags').insert({
-          tag_name: "gadgets",
+        knex('tags').insert({
+          tag_name: 'gadgets',
           created_at: new Date()
-
         })
-
       ]);
     });
-
 }
