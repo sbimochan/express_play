@@ -3,25 +3,33 @@ import validate from '../utils/validate';
 import * as userService from '../services/userService';
 
 const SCHEMA = {
-  first_name: Joi.string()
+  first_name: Joi
+    .string()
     .label('first name')
     .max(90)
     .required(),
-  last_name: Joi.string()
+  last_name: Joi
+    .string()
     .label('Last name')
     .max(90)
     .required(),
-  email: Joi.string().email()
+  email: Joi
+    .string()
+    .email()
     .label('email')
     .max(90)
     .required(),
-  username: Joi.string()
+  username: Joi
+    .string()
     .min(3)
     .max(30)
     .alphanum()
     .required(),
-    password:Joi.string()
-    .min(3).alphanum().required()
+  password: Joi
+    .string()
+    .min(3)
+    .alphanum()
+    .required()
 };
 
 /**
@@ -33,9 +41,7 @@ const SCHEMA = {
  * @return {Promise}
  */
 function userValidator(req, res, next) {
-  return validate(req.body, SCHEMA)
-    .then(() => next())
-    .catch(err => next(err));
+  return validate(req.body, SCHEMA).then(() => next()).catch(err => next(err));
 }
 
 /**
@@ -53,4 +59,4 @@ function findUser(req, res, next) {
     .catch(err => next(err));
 }
 
-export { findUser, userValidator };
+export {findUser, userValidator};

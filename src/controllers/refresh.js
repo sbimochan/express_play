@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import * as userService from '../services/userService';
 import * as jwtGenerator from '../utils/jwt';
 
@@ -9,10 +9,9 @@ router.get('/', userService.ensureToken, (req, res, next) => {
   const id = verified.userId;
   if (!id) {
     res.sendStatus(403);
-  }
-  else {
+  } else {
     let accessToken = jwtGenerator.generateAccessToken(id);
-    res.json({ "new access token": accessToken });
+    res.json({"new access token": accessToken});
   }
 
 });

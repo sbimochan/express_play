@@ -1,13 +1,13 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import HttpStatus from 'http-status-codes';
 import * as userService from '../services/userService';
 import * as todoService from '../services/todoService';
-import { findUser, userValidator } from '../validators/userValidator';
+import {findUser, userValidator} from '../validators/userValidator';
 import jwt from 'jsonwebtoken';
 import * as jwtGenerator from '../utils/jwt';
 import * as token from '../utils/token';
 import Boom from 'boom';
-import { findTodo, todoValidator } from '../validators/todoValidator';
+import {findTodo, todoValidator} from '../validators/todoValidator';
 
 const router = Router();
 
@@ -18,7 +18,7 @@ const router = Router();
 router.get('/', (req, res, next) => {
   userService
     .getAllUsers()
-    .then(data => res.json({ data }))
+    .then(data => res.json({data}))
     .catch(err => next(err));
 });
 
@@ -28,41 +28,27 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   userService
     .getUser(req.params.id)
-    .then(data => res.json({ data }))
+    .then(data => res.json({data}))
     .catch(err => next(err));
 });
 
-// router.get('/:id/todo', userService.ensureToken, (req, res, next) => {
-//   if (!req.query.search) {
-//     let verified = jwtGenerator.verifyAccessToken(req.token);
-//     // console.log('verified',verified);
-
-//     if (!verified.userId) {
-//       res.sendStatus(403);
-//     } else {
-//       if (Number(req.params.id) === verified.userId) {
-//         todoService
-//           .getUserTodos(req.params.id)
-//           .then(data => res.json({ data: data, pagination: data.pagination }))
-//           .catch(err => next(err));
-//         // next();
-//       } else {
-//         throw new Boom.forbidden('No no not allowed');
-//       }
-//     }
-//   } else {
-//     let verified = jwtGenerator.verifyAccessToken(req.token);
-
-//     let searchTodo = req.query.search;
-//     return todoService.searchTodo(searchTodo, verified.userId).then(data => res.json(data))
-//       .catch(err => next(err));
-
-//   }
-//   // token.verifyAccessToken(req.token);
-// });
+// router.get('/:id/todo', userService.ensureToken, (req, res, next) => {   if
+// (!req.query.search) {     let verified =
+// jwtGenerator.verifyAccessToken(req.token);     //
+// console.log('verified',verified);     if (!verified.userId) {
+// res.sendStatus(403);     } else {       if (Number(req.params.id) ===
+// verified.userId) {
+//         todoService           .getUserTodos(req.params.id) .then(data =>
+// res.json({ data: data, pagination: data.pagination }))  .catch(err =>
+// next(err));         // next();       } else {         throw new
+// Boom.forbidden('No no not allowed');       }     }   } else {     let
+// verified = jwtGenerator.verifyAccessToken(req.token);     let searchTodo =
+// req.query.search;     return todoService.searchTodo(searchTodo,
+// verified.userId).then(data => res.json(data))       .catch(err => next(err));
+//   }   // token.verifyAccessToken(req.token); });
 
 /**get individual todo
- * 
+ *
  */
 router.get('/:id/todo', (req, res, next) => {
   /*
@@ -75,27 +61,28 @@ router.get('/:id/todo', (req, res, next) => {
     } else {
       if (Number(req.params.id) === verified.userId) {
         */
-  todoService
-    .getUserTodos(req.params.id)
-    .then(data => res.json(data))
-    .catch(err => next(err));
+  if (!req.query.search) {
+    todoService
+      .getUserTodos(req.params.id)
+      .then(data => res.json(data))
+      .catch(err => next(err));
+  } else {
 
-  // next();
-  // } 
-  // else {
-  //   throw new Boom.forbidden('No no not allowed');
-  // }
-  //   }
-  // } else {
-  // let verified = jwtGenerator.verifyAccessToken(req.token);
+    let searchTodo = req.query.search;
+    return todoService
+      .searchTodo(searchTodo, req.params.id)
+      .then(data => res.json(data))
+      .catch(err => next(err));
 
-  // let searchTodo = req.query.search;
-  // return todoService.searchTodo(searchTodo, verified.userId).then(data => res.json(data))
-  //   .catch(err => next(err));
+  }
+
+  // next(); } else {   throw new Boom.forbidden('No no not allowed'); }   } }
+  // else { let verified = jwtGenerator.verifyAccessToken(req.token); let
+  // searchTodo = req.query.search; return todoService.searchTodo(searchTodo,
+  // verified.userId).then(data => res.json(data))   .catch(err => next(err));
 
 });
-// token.verifyAccessToken(req.token);
-// });
+// token.verifyAccessToken(req.token); });
 
 /*
 with token
@@ -136,12 +123,12 @@ router.get('/:id/todo/:todoId', userService.ensureToken, (req, res, next) => {
     res.sendStatus(403);
   } else {
     if (Number(req.params.id) === verified.userId) {
-      todoService.getTodo(req.params.todoId, req.params.id)
-        .then(data => res.json({ data: data, pagination: data.pagination }))
-        .catch(err => next(err));
-    }
-    //.then(data => res.json({ data: data, pagination: data.pagination }))
-    else {
+      todoService
+        .getTodo(req.params.todoId, req.params.id)
+        .then(data => res.json({data: data, pagination: data.pagination}))
+        .catch(err => next(err) //.then(data => res.json({ data: data, pagination: data.pagination }))
+        );
+    } else {
       throw new Boom.forbidden('No no not allowed');
     }
   }
@@ -152,28 +139,22 @@ router.get('/:id/todo/:todoId', userService.ensureToken, (req, res, next) => {
 router.post('/', userValidator, (req, res, next) => {
   userService
     .createUser(req.body)
-    .then(data => res.status(HttpStatus.CREATED).json({ data }))
+    .then(data => res.status(HttpStatus.CREATED).json({data}))
     .catch(err => next(err));
 });
 
-router.post('/:id/todo',(req, res, next) => {
-  // let verifiedId = jwtGenerator.verifyAccessToken(req.token);
-  // if (!verifiedId.userId) {
-  //   res.sendStatus(403);
-  // } else {
-    // if (req.params.id == verifiedId.userId) {
-      // todoService
-      // .createTags(req.body);
-      // console.log('sushan',todoService.createUserTodos(req.params.id,req.body));
+router.post('/:id/todo', (req, res, next) => {
+  // let verifiedId = jwtGenerator.verifyAccessToken(req.token); if
+  // (!verifiedId.userId) {   res.sendStatus(403); } else { if (req.params.id ==
+  // verifiedId.userId) {
+  // todoService .createTags(req.body);
+  // console.log('sushan',todoService.createUserTodos(req.params.id,req.body));
 
-      todoService
-        .createUserTodos(req.params.id, req.body)
-        .then(data => res.status(HttpStatus.CREATED).json(data))
-        .catch(err => next(err));
-    // } else {
-    //   throw new Boom.forbidden('No no not allowed');
-    // }
-  // }
+  todoService
+    .createUserTodos(req.params.id, req.body)
+    .then(data => res.status(HttpStatus.CREATED).json(data))
+    .catch(err => next(err));
+  // } else {   throw new Boom.forbidden('No no not allowed'); } }
 
 });
 /*
@@ -203,15 +184,20 @@ router.post('/:id/todo', userService.ensureToken, (req, res, next) => {
 
 */
 
-
-
 /**
  * PUT /api/users/:id
  */
+router.put('/:id/todo/:todoId', findTodo, (req, res, next) => {
+  todoService
+    .updateTodo(req.params.todoId, req.body)
+    .then(data => res.json({data}))
+    .catch(err => next(err));
+});
+
 router.put('/:id', findUser, userValidator, (req, res, next) => {
   userService
     .updateUser(req.params.id, req.body)
-    .then(data => res.json({ data }))
+    .then(data => res.json({data}))
     .catch(err => next(err));
 });
 
@@ -221,7 +207,7 @@ router.put('/:id', findUser, userValidator, (req, res, next) => {
 router.delete('/:id', findUser, (req, res, next) => {
   userService
     .deleteUser(req.params.id)
-    .then(data => res.status(HttpStatus.NO_CONTENT).json({ data }))
+    .then(data => res.status(HttpStatus.NO_CONTENT).json({data}))
     .catch(err => next(err));
 });
 
@@ -229,13 +215,12 @@ router.delete('/:id', findUser, (req, res, next) => {
  * delete todo
  */
 router.delete('/:id/todo/:todoId', findTodo, (req, res, next) => {
-  console.log('basanta',req.params.todoId);
-  
+  console.log('basanta', req.params.todoId);
+
   todoService
     .deleteTodo(req.params.todoId)
-    .then(data => res.status(HttpStatus.NO_CONTENT).json({ data }))
+    .then(data => res.status(HttpStatus.NO_CONTENT).json({data}))
     .catch(err => next(err));
 });
-
 
 export default router;

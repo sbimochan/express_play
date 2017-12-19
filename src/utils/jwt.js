@@ -2,14 +2,13 @@ import jwt from 'jsonwebtoken';
 import Boom from 'boom';
 
 export function generateTokens(data) {
-  return {
-    accessToken: generateAccessToken(data),
-    refreshToken: generateRefreshToken(data)
-  };
+  return {accessToken: generateAccessToken(data), refreshToken: generateRefreshToken(data)};
 }
 
 export function generateAccessToken(data) {
-  return jwt.sign({ userId: data }, process.env.SECRET_KEY, { expiresIn: 30*60 });
+  return jwt.sign({
+    userId: data
+  }, process.env.SECRET_KEY, {expiresIn: 30 *60});
 }
 
 /**
@@ -19,7 +18,9 @@ export function generateAccessToken(data) {
  * @returns {string}
  */
 export function generateRefreshToken(data) {
-  return jwt.sign({ userId: data }, process.env.REFRESH_SECRET_KEY, { expiresIn: 7*60*60 });
+  return jwt.sign({
+    userId: data
+  }, process.env.REFRESH_SECRET_KEY, {expiresIn: 7 *60});
 }
 
 /**
@@ -27,18 +28,16 @@ export function generateRefreshToken(data) {
  *
  */
 export function verifyAccessToken(token) {
-   return jwt.verify(token, process.env.SECRET_KEY,function(err,decode,token){
+  return jwt.verify(token, process.env.SECRET_KEY, function (err, decode, token) {
     //  console.log('token',err);
-    if(!err){
+    if (!err) {
       return decode;
+    } else if (err.name === 'TokenExpiredError') {
+      throw new Boom.unauthorized('token expired');
+    } else {
+      throw new Boom.unauthorized();
     }
-     else if(err.name ==='TokenExpiredError'){
-       throw new Boom.unauthorized('token expired');
-     }
-     else{
-       throw new Boom.unauthorized();
-     }
-   });
+  });
 }
 
 /**
@@ -46,16 +45,13 @@ export function verifyAccessToken(token) {
  *
  */
 export function verifyRefreshToken(token) {
-  return jwt.verify(token, process.env.REFRESH_SECRET_KEY,function (err,decode,token){
-    if(!err){
+  return jwt.verify(token, process.env.REFRESH_SECRET_KEY, function (err, decode, token) {
+    if (!err) {
       return decode;
-    }
-    else if (err.name === 'TokenExpiredError') {
+    } else if (err.name === 'TokenExpiredError') {
       throw new Boom.unauthorized('token expired');
-    }
-    else {
+    } else {
       throw new Boom.unauthorized();
     }
   });
 }
-

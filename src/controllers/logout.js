@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import HttpStatus from 'http-status-codes';
 import * as loginService from '../services/loginService';
 import * as userService from '../services/userService';
@@ -13,8 +13,7 @@ router.get('/', userService.ensureToken, (req, res, next) => {
   const id = verified.userId;
   if (!id) {
     res.sendStatus(403);
-  }
-  else {
+  } else {
     loginService.deleteSession(verified);
     res.sendStatus(200);
 
@@ -22,16 +21,8 @@ router.get('/', userService.ensureToken, (req, res, next) => {
   // next();
 });
 
-// router.delete('/', (req, res, next) => {
-//   console.log("kfldsjkfldsajkl jklfds jkls");
-
-//   loginService
-//     .findUser(req.body)
-//     .then(data => {
-//       loginService.deleteSession(data);
-//       res.json(data);
-//     })
-//     .catch(err => next(err));
-
-// });
+// router.delete('/', (req, res, next) => {   console.log("kfldsjkfldsajkl
+// jklfds jkls");   loginService     .findUser(req.body)     .then(data => {
+//   loginService.deleteSession(data);       res.json(data);     })
+// .catch(err => next(err)); });
 export default router;

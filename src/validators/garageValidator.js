@@ -3,18 +3,22 @@ import validate from '../utils/validate';
 import * as garageService from '../services/garageService';
 
 const SCHEMA = {
-  name: Joi.string()
+  name: Joi
+    .string()
     .label('Name')
     .max(90)
     .required(),
-  brand: Joi.string()
+  brand: Joi
+    .string()
     .label('Brand')
     .max(15)
     .required(),
-  year: Joi.number()
+  year: Joi
+    .number()
     .integer()
     .label('Make Year'),
-  type: Joi.string()
+  type: Joi
+    .string()
     .label('Type of Vehicle')
     .required()
 };
@@ -28,9 +32,7 @@ const SCHEMA = {
  * @return {Promise}
  */
 function vehicleValidator(req, res, next) {
-  return validate(req.body, SCHEMA)
-    .then(() => next())
-    .catch(err => next(err));
+  return validate(req.body, SCHEMA).then(() => next()).catch(err => next(err));
 }
 
 /**
@@ -48,4 +50,4 @@ function findVehicle(req, res, next) {
     .catch(err => next(err));
 }
 
-export { findVehicle, vehicleValidator };
+export {findVehicle, vehicleValidator};

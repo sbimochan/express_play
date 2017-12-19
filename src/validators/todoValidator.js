@@ -3,7 +3,8 @@ import validate from '../utils/validate';
 import * as todoService from '../services/todoService';
 
 const SCHEMA = {
-  description: Joi.string()
+  description: Joi
+    .string()
     .label('Description')
     .max(90)
     .required()
@@ -18,9 +19,7 @@ const SCHEMA = {
  * @return {Promise}
  */
 function todoValidator(req, res, next) {
-  return validate(req.body, SCHEMA)
-    .then(() => next())
-    .catch(err => next(err));
+  return validate(req.body, SCHEMA).then(() => next()).catch(err => next(err));
 }
 
 /**
@@ -32,14 +31,11 @@ function todoValidator(req, res, next) {
  * @return {Promise}
  */
 function findTodo(req, res, next) {
-  console.log('userid',req.params.id);
-  
-  console.log('x',req.params.todoId);//86
-  
+
   return todoService
-    .getTodo(req.params.id,req.params.todoId)
+    .getTodo(req.params.id, req.params.todoId)
     .then(() => next())
     .catch(err => next(err));
 }
 
-export { findTodo, todoValidator };
+export {findTodo, todoValidator};

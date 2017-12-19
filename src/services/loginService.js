@@ -8,7 +8,7 @@ import * as jwtGenerator from '../utils/jwt';
  */
 export function findUser(user) {
 
-  return new User({ username: user.username, password: user.password })
+  return new User({username: user.username, password: user.password})
     .fetch()
     .then(user => {
       if (!user) {
@@ -21,36 +21,25 @@ export function findUser(user) {
       let token = jwtGenerator.generateTokens(payload.id);
       token.userId = payload.id;
       return token;
-    
+
     });
 }
 export function saveSession(data) {
-  return new Session({
-    user_id: data.userId,
-    refresh_token: data.refreshToken
-  })
-  .save()
-  .then(data => data.refresh())
-  .catch(err => 
-    err
-  );
+  return new Session({user_id: data.userId, refresh_token: data.refreshToken})
+    .save()
+    .then(data => data.refresh())
+    .catch(err => err);
 
   // return allToken;
 }
-// function updateRefreshToken(err,data){
-  
-//   if(err.code === '23505'){
-//     let id = data.userId;
-//     return new Session({user_id:id})
-//     .save({refresh_token:data.refreshToken})
-//     .then(session=>session.refresh());
-//   }
-// }
-export function deleteSession(data){
-//  console.log('user id',data);
- 
-  return new Session({
-    user_id:data.userId
-  }).fetch()
-  .then(session=>session.destroy());
+// function updateRefreshToken(err,data){   if(err.code === '23505'){     let id
+// = data.userId;     return new Session({user_id:id})
+// .save({refresh_token:data.refreshToken})
+// .then(session=>session.refresh());   } }
+export function deleteSession(data) {
+  //  console.log('user id',data);
+
+  return new Session({user_id: data.userId})
+    .fetch()
+    .then(session => session.destroy());
 }

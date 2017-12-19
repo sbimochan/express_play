@@ -11,25 +11,17 @@ class User extends bookshelf.Model {
     return TABLE_NAME;
   }
 
-   hasTimestamps() {
+  hasTimestamps() {
     return true;
   }
-   todos(){
+  todos() {
     return this.hasMany(Todo);
   }
 }
-// class UserTodo extends bookshelf.Model {
-//   get todos(){
-//     return this.hasMany(Todo);
-//   }
-// }
-
-// let UserTodo = bookshelf.Model.extend({
-//   tableName:'users',
-//   todos: ()=>{
-//     return this.hasMany(TodoUser);
-//   }
-// });
+// class UserTodo extends bookshelf.Model {   get todos(){     return
+// this.hasMany(Todo);   } } let UserTodo = bookshelf.Model.extend({
+// tableName:'users',
+//   todos: ()=>{     return this.hasMany(TodoUser);   } });
 
 export default User;
 // export {UserTodo};
