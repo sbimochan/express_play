@@ -56,7 +56,7 @@ export function updateUser(id, user) {
  * jwt ensure
  */
 export function ensureToken(req, res, next) {
-  // console.log(req.headers["authorization"]);
+  console.log('header',req.headers["authorization"]);
   const bearerHeader = req.headers['authorization'];
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ');

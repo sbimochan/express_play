@@ -143,24 +143,27 @@ router.post('/', userValidator, (req, res, next) => {
     .catch(err => next(err));
 });
 
-router.post('/:id/todo', (req, res, next) => {
-  // let verifiedId = jwtGenerator.verifyAccessToken(req.token); if
-  // (!verifiedId.userId) {   res.sendStatus(403); } else { if (req.params.id ==
-  // verifiedId.userId) {
-  // todoService .createTags(req.body);
-  // console.log('sushan',todoService.createUserTodos(req.params.id,req.body));
+/**
+ * without token
+ */
+// router.post('/:id/todo', (req, res, next) => {
+//   // let verifiedId = jwtGenerator.verifyAccessToken(req.token); if
+//   // (!verifiedId.userId) {   res.sendStatus(403); } else { if (req.params.id ==
+//   // verifiedId.userId) {
+//   // todoService .createTags(req.body);
+//   // console.log('sushan',todoService.createUserTodos(req.params.id,req.body));
 
-  todoService
-    .createUserTodos(req.params.id, req.body)
-    .then(data => res.status(HttpStatus.CREATED).json(data))
-    .catch(err => next(err));
-  // } else {   throw new Boom.forbidden('No no not allowed'); } }
+//   todoService
+//     .createUserTodos(req.params.id, req.body)
+//     .then(data => res.status(HttpStatus.CREATED).json(data))
+//     .catch(err => next(err));
+//   // } else {   throw new Boom.forbidden('No no not allowed'); } }
 
-});
+// });
 /*
 with token
 */
-/*
+
 router.post('/:id/todo', userService.ensureToken, (req, res, next) => {
   let verifiedId = jwtGenerator.verifyAccessToken(req.token);
   if (!verifiedId.userId) {
@@ -182,7 +185,7 @@ router.post('/:id/todo', userService.ensureToken, (req, res, next) => {
 
 });
 
-*/
+
 
 /**
  * PUT /api/users/:id
@@ -215,12 +218,27 @@ router.delete('/:id', findUser, (req, res, next) => {
  * delete todo
  */
 router.delete('/:id/todo/:todoId', findTodo, (req, res, next) => {
-  console.log('basanta', req.params.todoId);
-
   todoService
     .deleteTodo(req.params.todoId)
     .then(data => res.status(HttpStatus.NO_CONTENT).json({data}))
     .catch(err => next(err));
 });
+/** with token
+* router.delete('/:id/todo/:todoId', userService.ensureToken, findTodo, (req, res, next) => {
+  let verifiedId = jwtGenerator.verifyAccessToken(req.token);
+  if (!verifiedId.userId) {
+    res.sendStatus(403);
+  } else {
+    if (req.params.id == verifiedId.userId) {
+      todoService
+        .deleteTodo(req.params.todoId)
+        .then(data => res.status(HttpStatus.NO_CONTENT).json({data}))
+        .catch(err => next(err));
 
+    } else {
+      throw new Boom.forbidden('no no not allowed');
+    }
+  }
+});
+ */
 export default router;
