@@ -8,7 +8,7 @@ export function generateTokens(data) {
 export function generateAccessToken(data) {
   return jwt.sign({
     userId: data
-  }, process.env.SECRET_KEY, {expiresIn: 30 *60});
+  }, process.env.SECRET_KEY, {expiresIn:  10*60});
 }
 
 /**
@@ -20,7 +20,7 @@ export function generateAccessToken(data) {
 export function generateRefreshToken(data) {
   return jwt.sign({
     userId: data
-  }, process.env.REFRESH_SECRET_KEY, {expiresIn: 7 *60});
+  }, process.env.REFRESH_SECRET_KEY, {expiresIn: '7d'});
 }
 
 /**
@@ -49,9 +49,9 @@ export function verifyRefreshToken(token) {
     if (!err) {
       return decode;
     } else if (err.name === 'TokenExpiredError') {
-      throw new Boom.unauthorized('token expired');
+      throw new Boom.unauthorized('refresh token expired');
     } else {
-      throw new Boom.unauthorized();
+      throw new Boom.unauthorized('');
     }
   });
 }
