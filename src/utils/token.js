@@ -3,7 +3,7 @@ import httpError from 'http-status-codes';
 import * as jwtGenerator from '../utils/jwt';
 
 export function fetchTokens(params) {
-  return jwt.generateTokens(params);
+  return jwtGenerator.generateTokens(params);
 }
 
 /**

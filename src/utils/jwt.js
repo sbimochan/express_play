@@ -6,9 +6,10 @@ export function generateTokens(data) {
 }
 
 export function generateAccessToken(data) {
-  return jwt.sign({
+  return jwt.sign(
+    {
     userId: data
-  }, process.env.SECRET_KEY, {expiresIn:  10*60});
+  }, process.env.SECRET_KEY, {expiresIn:  30*60});
 }
 
 /**
