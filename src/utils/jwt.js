@@ -14,7 +14,7 @@ export function generateAccessToken(data) {
       userId: data
     },
     process.env.SECRET_KEY,
-    { expiresIn: 10 }
+    { expiresIn: 30 * 60 }
   );
 }
 

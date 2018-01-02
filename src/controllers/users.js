@@ -165,10 +165,12 @@ with token
 
 router.post('/:id/todo', userService.ensureToken, (req, res, next) => {
   let verifiedId = jwtGenerator.verifyAccessToken(req.token);
+  // console.log(typeof req.params.id);
+
   if (!verifiedId.userId) {
     res.sendStatus(403);
   } else {
-    if (req.params.id === verifiedId.userId) {
+    if (+req.params.id === verifiedId.userId) {
       // todoService
       // .createTags(req.body);
       // console.log('sushan',todoService.createUserTodos(req.params.id,req.body));
