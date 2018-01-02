@@ -1,16 +1,16 @@
-import bookshelf from "../db";
-import Todo from "../models/todo";
+import bookshelf from '../db';
+import Todo from '../models/todo';
 
 const TABLE_NAME = 'tags';
 
 /**
  * Tags
  */
-class Tag extends bookshelf.Model{
-  get tableName(){
+class Tag extends bookshelf.Model {
+  get tableName() {
     return TABLE_NAME;
   }
-  todos(){
+  todos() {
     return this.belongsToMany(Todo);
   }
 }

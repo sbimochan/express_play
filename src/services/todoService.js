@@ -1,6 +1,5 @@
 import Boom from 'boom';
 import Todo from '../models/todo';
-import User from '../models/user';
 import Tag from '../models/tag';
 /**
  * Get all lists.
@@ -17,17 +16,13 @@ export function getAllTodos() {
  * @param  {Number|String}  id
  * @return {Promise}
  */
-export function getTodo(userId, todoId) {
-  console.log('userId', userId);
-  console.log('todoid', todoId);
-
-  return new Todo({userId})
-    .where({user_id: userId})
+export function getTodo(userId) {
+  return new Todo({ userId })
+    .where({ user_id: userId })
     .fetch({
       withRelated: ['user', 'tags']
     })
     .then(todo => {
-
       if (!todo) {
         throw new Boom.notFound('todo not found');
       }
@@ -42,31 +37,31 @@ export function getTodo(userId, todoId) {
 export function getUserTodos(userId) {
   // user id
   return new Todo()
-    .where({user_id: userId})
+    .where({ user_id: userId })
     .fetchPage({
       withRelated: ['user', 'tags']
     })
     .then(todo => {
       if (!todo) {
         throw new Boom.notFound('todo not found');
+      } else {
+        return todo;
       }
-      // console.log(todo);
-      console.log(todo);
-
-      return todo;
     });
 }
 /**
  * search todo
  */
 export function searchTodo(search, userId) {
-  return new Todo().query(qb => {
-    qb
-      .where('user_id', '=', userId)
-      .andWhere('description', 'LIKE', '%' + search + '%');
-  }).fetchPage({
-    withRelated: ['user', 'tags']
-  });
+  return new Todo()
+    .query(qb => {
+      qb
+        .where('user_id', '=', userId)
+        .andWhere('description', 'LIKE', '%' + search + '%');
+    })
+    .fetchPage({
+      withRelated: ['user', 'tags']
+    });
 }
 /**
  * Create new vehicleObj.
@@ -75,21 +70,17 @@ export function searchTodo(search, userId) {
  * @return {Promise}
  */
 export function createTodo(todoObj) {
-  return new Todo({description: todoObj.description})
-    .save()
-    .then(todoObj => {
-      return todoObj.refresh();
-    });
+  return new Todo({ description: todoObj.description }).save().then(todoObj => {
+    return todoObj.refresh();
+  });
 }
 
 export function createUserTodos(userId, body) {
   // user id
-  return new Todo({description: body.description, userId: userId})
+  return new Todo({ description: body.description, userId: userId })
     .save()
     .then(result => {
-      result
-        .tags()
-        .attach(body.tags);
+      result.tags().attach(body.tags);
 
       return result.refresh();
     });
@@ -112,11 +103,7 @@ export function createUserTodos(userId, body) {
 // return result.refresh();     }); }
 
 export function createTags(body) {
-  console.log(body);
-
-  return new Tag({tagName: body.tags})
-    .save()
-    .then(body => body.refresh());
+  return new Tag({ tagName: body.tags }).save().then(body => body.refresh());
 }
 /**
  * Update a vehicle.
@@ -126,8 +113,8 @@ export function createTags(body) {
  * @return {Promise}
  */
 export function updateTodo(id, todoObj) {
-  return new Todo({id})
-    .save({description: todoObj.description})
+  return new Todo({ id })
+    .save({ description: todoObj.description })
     .then(todoObj => todoObj.refresh());
 }
 
@@ -138,8 +125,5 @@ export function updateTodo(id, todoObj) {
  * @return {Promise}
  */
 export function deleteTodo(id) {
-  // console.log('deletetodo',todoId);
-  return new Todo({id})
-    .fetch()
-    .then(todoObj => todoObj.destroy());
+  return new Todo({ id }).fetch().then(todoObj => todoObj.destroy());
 }

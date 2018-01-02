@@ -9,4 +9,11 @@ router.get('/', (req, res, next) => {
     .then(data => res.json({ data }))
     .catch(err => next(err));
 });
+
+router.get('/:id', (req, res, next) => {
+  tagsService
+    .todosOfTags(req.params.id)
+    .then(data => res.json({ data }))
+    .catch(err => next(err));
+});
 export default router;

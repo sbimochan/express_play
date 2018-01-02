@@ -2,14 +2,20 @@ import jwt from 'jsonwebtoken';
 import Boom from 'boom';
 
 export function generateTokens(data) {
-  return {accessToken: generateAccessToken(data), refreshToken: generateRefreshToken(data)};
+  return {
+    accessToken: generateAccessToken(data),
+    refreshToken: generateRefreshToken(data)
+  };
 }
 
 export function generateAccessToken(data) {
   return jwt.sign(
     {
-    userId: data
-  }, process.env.SECRET_KEY, {expiresIn:  30*60});
+      userId: data
+    },
+    process.env.SECRET_KEY,
+    { expiresIn: 10 }
+  );
 }
 
 /**
@@ -19,9 +25,13 @@ export function generateAccessToken(data) {
  * @returns {string}
  */
 export function generateRefreshToken(data) {
-  return jwt.sign({
-    userId: data
-  }, process.env.REFRESH_SECRET_KEY, {expiresIn: '7d'});
+  return jwt.sign(
+    {
+      userId: data
+    },
+    process.env.REFRESH_SECRET_KEY,
+    { expiresIn: '7d' }
+  );
 }
 
 /**
@@ -29,7 +39,7 @@ export function generateRefreshToken(data) {
  *
  */
 export function verifyAccessToken(token) {
-  return jwt.verify(token, process.env.SECRET_KEY, function (err, decode, token) {
+  return jwt.verify(token, process.env.SECRET_KEY, function(err, decode) {
     //  console.log('token',err);
     if (!err) {
       return decode;
@@ -46,7 +56,10 @@ export function verifyAccessToken(token) {
  *
  */
 export function verifyRefreshToken(token) {
-  return jwt.verify(token, process.env.REFRESH_SECRET_KEY, function (err, decode, token) {
+  return jwt.verify(token, process.env.REFRESH_SECRET_KEY, function(
+    err,
+    decode
+  ) {
     if (!err) {
       return decode;
     } else if (err.name === 'TokenExpiredError') {
