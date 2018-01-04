@@ -59,9 +59,10 @@ router.get('/:id/todo', (req, res, next) => {
     } else {
       if (Number(req.params.id) === verified.userId) {
         */
+  const paginate = req.query.page;
   if (!req.query.search) {
     todoService
-      .getUserTodos(req.params.id)
+      .getUserTodos(req.params.id, paginate)
       .then(data => {
         res.json(data);
       })

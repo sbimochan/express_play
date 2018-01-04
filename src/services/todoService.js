@@ -34,18 +34,19 @@ export function getTodo(userId) {
 /** *get individual todos
  *
  */
-export function getUserTodos(userId) {
-  // user id
+export function getUserTodos(userId, paginate) {
   return new Todo()
     .where({ user_id: userId })
     .fetchPage({
+      page: paginate,
+      pageSize: 5,
       withRelated: ['user', 'tags']
     })
     .then(todo => {
       if (!todo) {
         throw new Boom.notFound('todo not found');
       } else {
-        return todo;
+        return (todo = { todo: todo, pagination: todo.pagination });
       }
     });
 }
