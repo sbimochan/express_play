@@ -61,7 +61,15 @@ export function searchTodo(search, userId) {
         .andWhere('description', 'LIKE', '%' + search + '%');
     })
     .fetchPage({
+      pageSize: 5,
       withRelated: ['user', 'tags']
+    })
+    .then(todo => {
+      if (!todo) {
+        throw new Boom.notFound('todo not found');
+      } else {
+        return (todo = { todo: todo, pagination: todo.pagination });
+      }
     });
 }
 /**
