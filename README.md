@@ -92,4 +92,3 @@ For contribution and feature requests, please create an [issue](https://github.c
 ## License
 
 express-api-es6-starter is under [MIT License](LICENSE.md).
-.
