@@ -1087,6 +1087,13 @@ cliui@^2.1.0:
     right-align "^0.1.1"
     wordwrap "0.0.2"
 
+cluster@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/cluster/-/cluster-0.7.7.tgz#e497e267cc956bd0b0513adb4aa393357d0085ef"
+  dependencies:
+    log ">= 1.2.0"
+    mkdirp ">= 0.0.1"
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -2994,6 +3001,10 @@ log-update@^1.0.2:
     ansi-escapes "^1.0.0"
     cli-cursor "^1.0.2"
 
+"log@>= 1.2.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/log/-/log-1.4.0.tgz#4ba1d890fde249b031dca03bc37eaaf325656f1c"
+
 longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
@@ -3101,7 +3112,7 @@ minimist@~1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.1.3.tgz#3bedfd91a92d39016fcfaa1c681e8faa1a1efda8"
 
-mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
+mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>= 0.0.1", "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
@@ -3343,6 +3354,10 @@ os-homedir@^1.0.0, os-homedir@^1.0.1:
 os-tmpdir@^1.0.1, os-tmpdir@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
+
+os@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/os/-/os-0.1.1.tgz#208845e89e193ad4d971474b93947736a56d13f3"
 
 output-file-sync@^1.1.2:
   version "1.1.2"
