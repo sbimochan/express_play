@@ -10,7 +10,7 @@ describe('Users Controller Test', () => {
   before(done => {
     bookshelf
       .knex('users')
-      .truncate()
+      // .truncate() foreign key
       .then(() => done());
   });
 

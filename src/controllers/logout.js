@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import {  Router  } from 'express';
 import HttpStatus from 'http-status-codes';
 import * as loginService from '../services/loginService';
 import * as userService from '../services/userService';
@@ -7,8 +7,6 @@ import * as jwtGenerator from '../utils/jwt';
 const router = Router();
 
 router.get('/', userService.ensureToken, (req, res, next) => {
-  // console.log('shruti',req.token);
-
   const verified = jwtGenerator.verifyRefreshToken(req.token);
   const id = verified.userId;
   if (!id) {
@@ -16,7 +14,6 @@ router.get('/', userService.ensureToken, (req, res, next) => {
   } else {
     loginService.deleteSession(verified);
     res.sendStatus(200);
-
   }
   // next();
 });
@@ -26,3 +23,4 @@ router.get('/', userService.ensureToken, (req, res, next) => {
 //   loginService.deleteSession(data);       res.json(data);     })
 // .catch(err => next(err)); });
 export default router;
+

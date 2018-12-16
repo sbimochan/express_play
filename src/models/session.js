@@ -1,12 +1,12 @@
-import  bookshelf  from "../db";
+import bookshelf from '../db';
 
 const TABLE_NAME = 'sessions';
 
-class Session extends bookshelf.Model{
-  get tableName(){
+class Session extends bookshelf.Model {
+  get tableName() {
     return TABLE_NAME;
   }
-  get hasTimestamps(){
+  get hasTimestamps() {
     return true;
   }
 }

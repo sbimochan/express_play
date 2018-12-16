@@ -7,8 +7,7 @@ import * as jwtGenerator from '../utils/jwt';
  * login
  */
 export function findUser(user) {
-
-  return new User({username: user.username, password: user.password})
+  return new User({ username: user.username, password: user.password })
     .fetch()
     .then(user => {
       if (!user) {
@@ -17,15 +16,15 @@ export function findUser(user) {
       const payload = {
         id: user.attributes.id,
         password: user.attributes.password
-      }
+      };
       let token = jwtGenerator.generateTokens(payload.id);
       token.userId = payload.id;
-      return token;
 
+      return token;
     });
 }
 export function saveSession(data) {
-  return new Session({user_id: data.userId, refresh_token: data.refreshToken})
+  return new Session({ user_id: data.userId, refresh_token: data.refreshToken })
     .save()
     .then(data => data.refresh())
     .catch(err => err);
@@ -39,7 +38,7 @@ export function saveSession(data) {
 export function deleteSession(data) {
   //  console.log('user id',data);
 
-  return new Session({user_id: data.userId})
+  return new Session({ user_id: data.userId })
     .fetch()
     .then(session => session.destroy());
 }

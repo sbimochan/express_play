@@ -16,15 +16,13 @@ export function getAllUsers() {
  * @return {Promise}
  */
 export function getUser(id) {
-  return new User({id})
-    .fetch()
-    .then(user => {
-      if (!user) {
-        throw new Boom.notFound('User not found');
-      }
+  return new User({ id }).fetch().then(user => {
+    if (!user) {
+      throw new Boom.notFound('User not found');
+    }
 
-      return user;
-    });
+    return user;
+  });
 }
 
 /**
@@ -34,8 +32,13 @@ export function getUser(id) {
  * @return {Promise}
  */
 export function createUser(user) {
-
-  return new User({first_name: user.first_name, last_name: user.last_name, email: user.email, username: user.username, password: user.password})
+  return new User({
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    username: user.username,
+    password: user.password
+  })
     .save()
     .then(user => user.refresh());
 }
@@ -48,15 +51,14 @@ export function createUser(user) {
  * @return {Promise}
  */
 export function updateUser(id, user) {
-  return new User({id})
-    .save({name: user.name})
+  return new User({ id })
+    .save({ name: user.name })
     .then(user => user.refresh());
 }
 /**
  * jwt ensure
  */
 export function ensureToken(req, res, next) {
-  console.log('header',req.headers["authorization"]);
   const bearerHeader = req.headers['authorization'];
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ');
@@ -75,7 +77,5 @@ export function ensureToken(req, res, next) {
  * @return {Promise}
  */
 export function deleteUser(id) {
-  return new User({id})
-    .fetch()
-    .then(user => user.destroy());
+  return new User({ id }).fetch().then(user => user.destroy());
 }
