@@ -1,4 +1,4 @@
-import {  Router  } from 'express';
+import { Router } from 'express';
 import HttpStatus from 'http-status-codes';
 import * as loginService from '../services/loginService';
 import * as userService from '../services/userService';
@@ -23,4 +23,3 @@ router.get('/', userService.ensureToken, (req, res, next) => {
 //   loginService.deleteSession(data);       res.json(data);     })
 // .catch(err => next(err)); });
 export default router;
-
